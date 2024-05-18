@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+*{
+    margin: 0px;
+    background-color:black;
+}
+.abc{
+height:300px;
+width: 350px;
+max-width: 350px;
+align-items: center;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+margin-left: 500px;
+margin-top: 200px;
+}
+.box{
+    height: 100px;
+    width: 100px;
+    background-color: white;
+    border: 2px solid black;
+    border: border-box;
+    box-shadow: 2px 2px 10px whitesmoke;
+    color: brown;
+    font-size: 20px;
+}
+.reset{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.rese{
+    background-color: white;
+    color: blue;
+}
+</style>
+<body>
+     <div class="abc">
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+        <button class="box"></button>
+     </div>
+     <div class="reset">
+     <button class="rese">reset</button>
+     </div>
+    </body>
+    <script>
+        let btns=document.querySelectorAll('.box');
+        let reset=document.querySelector('.rese');
+        let turno=true;
+        const winpattern=[
+            [1,2,3],
+            [4,5,6],
+            [7,8,9],
+            [1,4,7],
+            [2,5,8],
+            [3,6,9],
+            [1,5,9],
+            [3,5,7]
+    ];
+    btns.forEach((box)=>{
+      box.addEventListener('click',function(event){
+        if(turno){
+            box.innerText="O";
+            turno=false;
+        }
+        else{
+            box.innerText="X";
+            turno=true;
+        }
+        box.disabled=true;
+        
+        checkwinner();
+      });
+    });
+    function checkwinner() {
+        for (let i = 0; i < winpattern.length; i++) {
+            let winCombo = winpattern[i];
+            let a = btns[winCombo[0] - 1].innerText;
+            let b = btns[winCombo[1] - 1].innerText;
+            let c = btns[winCombo[2] - 1].innerText;
+
+            if (a!== "" && a === b && b === c) {
+                alert(`Player ${a} wins!`);
+                btns.forEach((box) => {
+                    box.disabled = true;
+                });
+            }
+        }
+    }
+    reset.addEventListener('click',function(event){
+        btns.forEach((box)=>{
+            box.innerText="";
+            box.disabled=false;
+            turno=true;
+    });
+});
+    </script>
+</html>
